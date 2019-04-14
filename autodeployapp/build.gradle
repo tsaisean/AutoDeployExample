@@ -36,8 +36,8 @@ android {
     buildConfigField 'String', 'GIT_TIMESTAMP_STRING', "\"${gitTimestampString()}\""
 
     applicationId "com.szagurskii.autodeploy"
-    minSdkVersion 14
-    targetSdkVersion 23
+    minSdkVersion 19
+    targetSdkVersion 27
     versionCode buildNumber
     versionName "1.0"
   }
@@ -56,44 +56,44 @@ dependencies {
 }
 
 // Change apk name.
-android.applicationVariants.all { variant ->
-  for (output in variant.outputs) {
-    def outputFile = output.outputFile
-    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-      // Get flavor from the application variant.
-      def flavor = "";
-      if (!variant.productFlavors.isEmpty()) {
-        flavor = variant.productFlavors.get(0).name;
-      }
-
-      // If this is a release version of APK, fully rename the file.
-      if ("release".equals(buildType.name) && isCi) {
-        def fileName = "autodeployapp-${versionCode}-${versionName}-${buildType.name}-${gitLocalSha()}.apk"
-        //noinspection GroovyAssignabilityCheck
-        outputFileName = new File(outputFile.parent, fileName)
-      }
-    }
-  }
-}
+//android.applicationVariants.all { variant ->
+//  for (output in variant.outputs) {
+//    def outputFile = output.outputFile
+//    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//      // Get flavor from the application variant.
+//      def flavor = "";
+//      if (!variant.productFlavors.isEmpty()) {
+//        flavor = variant.productFlavors.get(0).name;
+//      }
+//
+//      // If this is a release version of APK, fully rename the file.
+//      if ("release".equals(buildType.name) && isCi) {
+//        def fileName = "autodeployapp-${versionCode}-${versionName}-${buildType.name}-${gitLocalSha()}.apk"
+//        //noinspection GroovyAssignabilityCheck
+//        outputFileName = new File(outputFile.parent, fileName)
+//      }
+//    }
+//  }
+//}
 
 // Delete unaligned files.
-android.applicationVariants.all { variant ->
-  variant.assemble.doLast {
-    variant.outputs.each { output ->
-      if (isCi) {
-        println "aligned " + output.outputFile
-        println "unaligned " + output.packageApplication.outputFile
-
-        File unaligned = output.packageApplication.outputFile;
-        File aligned = output.outputFile
-        if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
-          println "Deleting " + unaligned.getName()
-          unaligned.delete()
-        }
-      }
-    }
-  }
-}
+//android.applicationVariants.all { variant ->
+//  variant.assemble.doLast {
+//    variant.outputs.each { output ->
+//      if (isCi) {
+//        println "aligned " + output.outputFile
+//        println "unaligned " + output.packageApplication.outputFile
+//
+//        File unaligned = output.packageApplication.outputFile;
+//        File aligned = output.outputFile
+//        if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
+//          println "Deleting " + unaligned.getName()
+//          unaligned.delete()
+//        }
+//      }
+//    }
+//  }
+//}
 
 /**
  * Get SHA of the current commit.
