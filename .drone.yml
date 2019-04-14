@@ -1,0 +1,8 @@
+image: inv3rse/android-sdk-27
+env:
+script:
+- ./gradlew test assemble
+notify:
+  email:
+    recipients:
+    - seanseansean1223@hotmail.com
