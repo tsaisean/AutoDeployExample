@@ -3,6 +3,6 @@ name: default
 
 steps:
 - name: build
-  image: inv3rse/android-sdk-27
+  image: inv3rse/android-sdk-27:1.0.3
   commands:
   - ./gradlew test assemble
