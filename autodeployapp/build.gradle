@@ -70,7 +70,7 @@ android.applicationVariants.all { variant ->
       if ("release".equals(buildType.name) && isCi) {
         def fileName = "autodeployapp-${versionCode}-${versionName}-${buildType.name}-${gitLocalSha()}.apk"
         //noinspection GroovyAssignabilityCheck
-        output.outputFile = new File(outputFile.parent, fileName)
+        outputFileName = new File(outputFile.parent, fileName)
       }
     }
   }
