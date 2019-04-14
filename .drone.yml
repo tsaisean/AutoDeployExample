@@ -2,11 +2,13 @@ kind: pipeline
 name: default
 
 steps:
+
+- name: before-build
+  image: docker:git
+
 - name: build
-  image:
-  - inv3rse/android-sdk-27:1.0.3
-  - docker:git
+  image: inv3rse/android-sdk-27:1.0.3
   commands:
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+#  - mkdir "$ANDROID_HOME/licenses" || true
+#  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   - ./gradlew test assemble
