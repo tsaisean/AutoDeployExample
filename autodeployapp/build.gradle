@@ -99,42 +99,46 @@ android.applicationVariants.all { variant ->
  * Get SHA of the current commit.
  */
 def gitLocalSha() {
-  def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
-  p.waitFor()
-  if (p.exitValue() != 0) {
-    throw new RuntimeException(p.errorStream.text)
-  }
-
-  return p.text.trim()
+    return ""
+//  def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
+//  p.waitFor()
+//  if (p.exitValue() != 0) {
+//    throw new RuntimeException(p.errorStream.text)
+//  }
+//
+//  return p.text.trim()
 }
 
 /**
  * Get last commit timestamp.
  */
 def gitTimestamp() {
-  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
-  p.waitFor()
-  if (p.exitValue() != 0) {
-    throw new RuntimeException(p.errorStream.text)
-  }
+    return ""
 
-  return p.text.trim()
+//  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
+//  p.waitFor()
+//  if (p.exitValue() != 0) {
+//    throw new RuntimeException(p.errorStream.text)
+//  }
+//
+//  return p.text.trim()
 }
 
 /**
  * Get last commit timestamp in string.
  */
 def String gitTimestampString() {
-  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
-  p.waitFor()
-  if (p.exitValue() != 0) {
-    throw new RuntimeException(p.errorStream.text)
-  }
-
-  DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z", Locale.getDefault());
-  dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
-
-  return dateFormat.format(new Date(1000L * Long.parseLong(p.text.trim())));
+    return ""
+//  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
+//  p.waitFor()
+//  if (p.exitValue() != 0) {
+//    throw new RuntimeException(p.errorStream.text)
+//  }
+//
+//  DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z", Locale.getDefault());
+//  dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+//
+//  return dateFormat.format(new Date(1000L * Long.parseLong(p.text.trim())));
 }
 
 /**
