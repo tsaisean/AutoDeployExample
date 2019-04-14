@@ -24,8 +24,8 @@ android {
       storePassword 'AutoDeploySample'
     }
   }
-  compileSdkVersion 23
-  buildToolsVersion "23.0.3"
+  compileSdkVersion 27
+  buildToolsVersion "28.0.3"
   defaultConfig {
     // Include all fields for later usage in developer options menu. Can be accessed via BuildConfig class.
     buildConfigField 'boolean', 'CI', "${isCi}"
@@ -36,8 +36,8 @@ android {
     buildConfigField 'String', 'GIT_TIMESTAMP_STRING', "\"${gitTimestampString()}\""
 
     applicationId "com.szagurskii.autodeploy"
-    minSdkVersion 14
-    targetSdkVersion 23
+    minSdkVersion 19
+    targetSdkVersion 27
     versionCode buildNumber
     versionName "1.0"
   }
@@ -56,56 +56,57 @@ dependencies {
 }
 
 // Change apk name.
-android.applicationVariants.all { variant ->
-  for (output in variant.outputs) {
-    def outputFile = output.outputFile
-    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-      // Get flavor from the application variant.
-      def flavor = "";
-      if (!variant.productFlavors.isEmpty()) {
-        flavor = variant.productFlavors.get(0).name;
-      }
-
-      // If this is a release version of APK, fully rename the file.
-      if ("release".equals(buildType.name) && isCi) {
-        def fileName = "autodeployapp-${versionCode}-${versionName}-${buildType.name}-${gitLocalSha()}.apk"
-        //noinspection GroovyAssignabilityCheck
-        output.outputFile = new File(outputFile.parent, fileName)
-      }
-    }
-  }
-}
+//android.applicationVariants.all { variant ->
+//  for (output in variant.outputs) {
+//    def outputFile = output.outputFile
+//    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//      // Get flavor from the application variant.
+//      def flavor = "";
+//      if (!variant.productFlavors.isEmpty()) {
+//        flavor = variant.productFlavors.get(0).name;
+//      }
+//
+//      // If this is a release version of APK, fully rename the file.
+//      if ("release".equals(buildType.name) && isCi) {
+//        def fileName = "autodeployapp-${versionCode}-${versionName}-${buildType.name}-${gitLocalSha()}.apk"
+//        //noinspection GroovyAssignabilityCheck
+//        outputFileName = new File(outputFile.parent, fileName)
+//      }
+//    }
+//  }
+//}
 
 // Delete unaligned files.
-android.applicationVariants.all { variant ->
-  variant.assemble.doLast {
-    variant.outputs.each { output ->
-      if (isCi) {
-        println "aligned " + output.outputFile
-        println "unaligned " + output.packageApplication.outputFile
-
-        File unaligned = output.packageApplication.outputFile;
-        File aligned = output.outputFile
-        if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
-          println "Deleting " + unaligned.getName()
-          unaligned.delete()
-        }
-      }
-    }
-  }
-}
+//android.applicationVariants.all { variant ->
+//  variant.assemble.doLast {
+//    variant.outputs.each { output ->
+//      if (isCi) {
+//        println "aligned " + output.outputFile
+//        println "unaligned " + output.packageApplication.outputFile
+//
+//        File unaligned = output.packageApplication.outputFile;
+//        File aligned = output.outputFile
+//        if (!unaligned.getName().equalsIgnoreCase(aligned.getName())) {
+//          println "Deleting " + unaligned.getName()
+//          unaligned.delete()
+//        }
+//      }
+//    }
+//  }
+//}
 
 /**
  * Get SHA of the current commit.
  */
 def gitLocalSha() {
-  def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
-  p.waitFor()
-  if (p.exitValue() != 0) {
-    throw new RuntimeException(p.errorStream.text)
-  }
-
-  return p.text.trim()
+    return ""
+//  def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
+//  p.waitFor()
+//  if (p.exitValue() != 0) {
+//    throw new RuntimeException(p.errorStream.text)
+//  }
+//
+//  return p.text.trim()
 }
 
 /**
@@ -125,16 +126,17 @@ def gitTimestamp() {
  * Get last commit timestamp in string.
  */
 def String gitTimestampString() {
-  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
-  p.waitFor()
-  if (p.exitValue() != 0) {
-    throw new RuntimeException(p.errorStream.text)
-  }
-
-  DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z", Locale.getDefault());
-  dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
-
-  return dateFormat.format(new Date(1000L * Long.parseLong(p.text.trim())));
+    return ""
+//  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
+//  p.waitFor()
+//  if (p.exitValue() != 0) {
+//    throw new RuntimeException(p.errorStream.text)
+//  }
+//
+//  DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z", Locale.getDefault());
+//  dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+//
+//  return dateFormat.format(new Date(1000L * Long.parseLong(p.text.trim())));
 }
 
 /**
