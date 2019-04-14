@@ -113,15 +113,13 @@ def gitLocalSha() {
  * Get last commit timestamp.
  */
 def gitTimestamp() {
-    return "0"
+  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
+  p.waitFor()
+  if (p.exitValue() != 0) {
+    throw new RuntimeException(p.errorStream.text)
+  }
 
-//  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
-//  p.waitFor()
-//  if (p.exitValue() != 0) {
-//    throw new RuntimeException(p.errorStream.text)
-//  }
-//
-//  return p.text.trim()
+  return p.text.trim()
 }
 
 /**
