@@ -3,14 +3,11 @@ name: default
 
 steps:
 
-- name: before-build
-  image: docker:git
-
 - name: build
-  image: inv3rse/android-sdk-27:1.0.3
+  image: runmymind/docker-android-sdk:alpine-standalone
   commands:
   - mkdir "$ANDROID_HOME/licenses" || true
   - ls "$ANDROID_HOME/build-tools"
   - cat "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+#  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   - ./gradlew test assemble
